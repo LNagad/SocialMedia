@@ -1,0 +1,29 @@
+﻿@using Core.Application.ViewModels.User;
+@model LoginViewModel
+@{
+
+}
+
+<div class="col-12 d-flex justify-content-center">
+    <div class="col-5 mt-5">
+        <form asp-action="Login" method="post" asp-controller="User">
+            @Html.ValidationSummary(false, "", new{@class = "text-danger"})
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label">Usuario</label>
+                <input asp-for="UserName" class="form-control">
+
+                <span asp-validation-for="UserName" class="form-label text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Password</label>
+                <input asp-for="Password" class="form-control" >
+                <span asp-validation-for="Password" class="form-label text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">Login</button>
+            <a asp-action="Register" asp-controller="User" class="btn btn-outline-info">Register</a>
+            </div>
+        </form>
+    </div>
+</div>

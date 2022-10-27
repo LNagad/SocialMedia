@@ -5,7 +5,7 @@ namespace Core.Application.Interfaces.Repositories
     {
         Task<Entity> AddAsync(Entity entity);
 
-        Task UpdateAsync(Entity entity);
+        Task UpdateAsync(Entity entity, int id);
 
         Task<Entity> GetByIdAsync(int id);
 
@@ -13,6 +13,6 @@ namespace Core.Application.Interfaces.Repositories
 
         Task<List<Entity>> GetAllWithIncludeAsync(List<string> properties);
 
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Entity entity);
     }
 }

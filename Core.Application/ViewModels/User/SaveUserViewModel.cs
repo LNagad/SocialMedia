@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,5 +28,8 @@ namespace Core.Application.ViewModels.User
         [StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
         [Compare(nameof(Password), ErrorMessage = "Las password no coinciden")]
         public string ConfirmPassword { get; set; }
+
+        [DataType(DataType.Upload)]
+        public IFormFile File1 { get; set; }
     }
 }

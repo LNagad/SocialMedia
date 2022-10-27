@@ -25,9 +25,12 @@ namespace Infrastructure.Persistence.Repositories
             return entity;
         }
 
-        public virtual async Task UpdateAsync(Entity entity)
+        public virtual async Task UpdateAsync(Entity entity, int id)
         {
-             _dbContext.Entry(entity).State = EntityState.Modified;
+            Entity entry = await _dbContext.Set<Entity>().FindAsync(id);
+
+            _dbContext.Entry(entry).CurrentValues.SetValues(entity);
+
             await _dbContext.SaveChangesAsync();
         }
 
@@ -54,10 +57,8 @@ namespace Infrastructure.Persistence.Repositories
             return await query.ToListAsync();
         }
 
-        public virtual async Task DeleteAsync(int id)
+        public virtual async Task DeleteAsync(Entity entity)
         {
-            Entity entity = await GetByIdAsync(id);
-
             _dbContext.Set<Entity>().Remove(entity);
 
             await _dbContext.SaveChangesAsync();

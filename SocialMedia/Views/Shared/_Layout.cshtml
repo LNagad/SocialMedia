@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Core.Application.Helpers
+@using Microsoft.AspNetCore.Http;
+@using Core.Application.ViewModels.User
+@inject IHttpContextAccessor httpContext;
+@{
+    UserViewModel user = httpContext.HttpContext.Session.Get<UserViewModel>("user");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,6 +20,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
+
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SocialMedia</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -19,19 +28,33 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                      <div class="w-75 d-flex">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                      </div>
+                        <li class="nav-item w-25 d-flex justify-content-end">
+                    <a class="nav-link text-dark" asp-controller="User" asp-action="Logout">@(user != null ? "cerrar sesion" : "Iniciar sesion")</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="col-12 d-flex">
+        <div class="col-1">
+            @if (user != null)
+            {
+                <div class="d-flex align-items-center align-content-center h-100">
+                    <img src="@user.ProfileImg" class="" style="width: 50px; border-radius: 25px;" />
+                    <h4 class="me-2">@user.UserName</h4>
+                </div>
+            }
+        </div>
+        <main role="main" class="col-10 d-flex align-items-center flex-column">
             @RenderBody()
         </main>
     </div>

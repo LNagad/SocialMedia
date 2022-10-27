@@ -35,5 +35,14 @@ namespace Infrastructure.Persistence.Repositories
 
             return user;
         }
+
+        public async Task<User> Login(LoginViewModel userVM)
+        {
+            User user = await _dbContext.Set<User>().
+                FirstOrDefaultAsync(user => user.UserName == userVM.UserName
+                && user.Password == userVM.Password);
+
+            return user;
+        }
     }
 }

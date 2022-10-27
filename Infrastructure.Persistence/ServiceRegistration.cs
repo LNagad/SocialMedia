@@ -1,4 +1,6 @@
-﻿using Infrastructure.Persistence.Contexts;
+﻿using Core.Application.Interfaces.Repositories;
+using Infrastructure.Persistence.Contexts;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +33,8 @@ namespace Infrastructure.Persistence
 
             #region "Repositories"
             
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IUserRepository, UserRepository>();
             #endregion
         }
     }
