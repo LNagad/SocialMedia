@@ -18,6 +18,7 @@ namespace Core.Domain.Entities
         public string Password { get; set; }
         public Boolean Enabled { get; set; }
 
-        //public ICollection<Post>? posts { get; set; }
+        public ICollection<Post>? Posts { get; set; }
+        public ICollection<Friends>? Friends { get; set; }
     }
 }

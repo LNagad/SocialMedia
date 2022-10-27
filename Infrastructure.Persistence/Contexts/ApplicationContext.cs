@@ -44,14 +44,37 @@ namespace Infrastructure.Persistence.Contexts
 
             #region tables
             modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Post>().ToTable("Posts");
+            modelBuilder.Entity<Comments>().ToTable("Comments");
+            modelBuilder.Entity<Friends>().ToTable("Friends");
             #endregion
 
             #region "primary keys"
             modelBuilder.Entity<User>().HasKey(p => p.Id);
+            modelBuilder.Entity<Post>().HasKey(p => p.Id);
+            modelBuilder.Entity<Comments>().HasKey(p => p.Id);
+            modelBuilder.Entity<Friends>().HasKey(p => p.Id);
             #endregion
 
             #region "relation Ships"
+            modelBuilder.Entity<User>()
+                .HasMany<Post>(user => user.Posts)
+                .WithOne(post => post.User)
+                .HasForeignKey(post => post.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<User>()
+                .HasMany<Friends>(user => user.Friends)
+                .WithOne(friend => friend.User)
+                .HasForeignKey(friend => friend.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<Post>()
+                .HasMany<Comments>(post => post.Comments)
+                .WithOne(comm => comm.Post)
+                .HasForeignKey(comm => comm.PostId)
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             #region "tables properties"
