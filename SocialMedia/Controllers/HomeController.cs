@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Application.ViewModels.PostVM;
+using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Models;
 using System.Diagnostics;
 

@@ -19,6 +19,7 @@ namespace Core.Application
             #region services
             services.AddTransient(typeof(IGenericService<,,>), typeof(GenericService<,,>));
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IPostService, PostService>();
             #endregion
         }
     }

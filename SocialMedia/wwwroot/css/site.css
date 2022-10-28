@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#postBody {
+    display: block;
+    overflow: hidden;
+    resize: none;
+}

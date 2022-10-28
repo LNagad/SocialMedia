@@ -1,6 +1,6 @@
 ﻿@using Core.Application.Helpers
 @using Microsoft.AspNetCore.Http;
-@using Core.Application.ViewModels.User
+@using Core.Application.ViewModels.UserVM
 @inject IHttpContextAccessor httpContext;
 @{
     UserViewModel user = httpContext.HttpContext.Session.Get<UserViewModel>("user");
@@ -28,36 +28,27 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                      <div class="w-75 d-flex">
+                        <div class="w-75 d-flex">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                      </div>
-                        <li class="nav-item w-25 d-flex justify-content-end">
-                    <a class="nav-link text-dark" asp-controller="User" asp-action="Logout">@(user != null ? "cerrar sesion" : "Iniciar sesion")</a>
-                        </li>
-                    </ul>
                 </div>
+                <div class="w-25 d-flex justify-content-end">
+                    <a class="nav-link text-dark" asp-controller="User" asp-action="Logout">@(user != null ? "cerrar sesion" : "Iniciar sesion")</a>
+                </div>
+                </ul>
+            </div>
             </div>
         </nav>
     </header>
-    <div class="col-12 d-flex">
-        <div class="col-1">
-            @if (user != null)
-            {
-                <div class="d-flex align-items-center align-content-center h-100">
-                    <img src="@user.ProfileImg" class="" style="width: 50px; border-radius: 25px;" />
-                    <h4 class="me-2">@user.UserName</h4>
-                </div>
-            }
-        </div>
-        <main role="main" class="col-10 d-flex align-items-center flex-column">
-            @RenderBody()
-        </main>
-    </div>
+
+    <main role="main" class="col-12 d-flex justify-content-center">
+        @RenderBody()
+    </main>
+
 
     <footer class="border-top footer text-muted">
         <div class="container">

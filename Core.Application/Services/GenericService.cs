@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Interfaces.Services;
-using Core.Application.ViewModels.User;
+using Core.Application.ViewModels.UserVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Core.Application.Services
         }
 
 
-        public async Task<SaveViewModel> AddAsync(SaveViewModel vm)
+        public virtual async Task<SaveViewModel> AddAsync(SaveViewModel vm)
         {
             Entity entity = _mapper.Map<Entity>(vm);
            
@@ -37,14 +37,14 @@ namespace Core.Application.Services
             return entityVM;
         }
 
-        public async Task UpdateAsync(SaveViewModel vm, int id)
+        public virtual async Task UpdateAsync(SaveViewModel vm, int id)
         {
             Entity entity = _mapper.Map<Entity>(vm);
             
             await _repository.UpdateAsync(entity, id);
 
         }
-        public async Task<List<ViewModel>> GetAllViewModel()
+        public virtual async Task<List<ViewModel>> GetAllViewModel()
         {
             var entityList = await _repository.GetAllAsync();
 
@@ -52,7 +52,7 @@ namespace Core.Application.Services
 
         }
 
-        public async Task<SaveViewModel> GetViewModelById(int id)
+        public virtual async Task<SaveViewModel> GetViewModelById(int id)
         {
             Entity entity = await _repository.GetByIdAsync(id);
 
@@ -61,7 +61,7 @@ namespace Core.Application.Services
             return SaveVM;
         }
 
-        public async Task DeleteAsync(int id)
+        public virtual async Task DeleteAsync(int id)
         {
             Entity entity = await _repository.GetByIdAsync(id);
             await _repository.DeleteAsync(entity);

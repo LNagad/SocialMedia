@@ -1,6 +1,6 @@
 ﻿using Core.Application.Helpers;
 using Core.Application.Interfaces.Repositories;
-using Core.Application.ViewModels.User;
+using Core.Application.ViewModels.UserVM;
 using Core.Domain.Entities;
 using Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;

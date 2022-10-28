@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Core.Application.ViewModels.PostVM;
+using Core.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Application.ViewModels.User
+namespace Core.Application.ViewModels.UserVM
 {
     public class UserViewModel
     {
@@ -18,7 +20,7 @@ namespace Core.Application.ViewModels.User
         public string Password { get; set; }
         public Boolean Enabled { get; set; }
 
-
-        //public ICollection<Post>? posts { get; set; }
+        public ICollection<Post>? Posts { get; set; }
+        public ICollection<Friends>? Friends { get; set; }
     }
 }

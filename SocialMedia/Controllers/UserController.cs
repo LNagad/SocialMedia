@@ -1,6 +1,6 @@
 ﻿using Core.Application.Helpers;
 using Core.Application.Interfaces.Services;
-using Core.Application.ViewModels.User;
+using Core.Application.ViewModels.UserVM;
 using Core.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using SocialMedia.Middlewares;

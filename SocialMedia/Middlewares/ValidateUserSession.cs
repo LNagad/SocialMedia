@@ -1,5 +1,5 @@
 ﻿using Core.Application.Helpers;
-using Core.Application.ViewModels.User;
+using Core.Application.ViewModels.UserVM;
 
 namespace SocialMedia.Middlewares
 {

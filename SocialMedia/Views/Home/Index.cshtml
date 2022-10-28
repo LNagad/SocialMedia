@@ -1,8 +1,29 @@
-﻿@{
+﻿@using Core.Application.ViewModels.PostVM
+@using Core.Application.Helpers
+@using Microsoft.AspNetCore.Http;
+@using Core.Application.ViewModels.UserVM
+@model SavePostViewModel
+@inject IHttpContextAccessor httpContext;
+@{
+    UserViewModel user = httpContext.HttpContext.Session.Get<UserViewModel>("user");
     ViewData["Title"] = "Home Page";
 }
+<div class="col-12 d-flex" style="border: 1px solid red;">
+    <div class="col-2" style="border: 1px solid red;">
+        @if (user != null)
+        {
+            <div class="d-flex align-items-center align-content-center h-100">
+                <img src="@user.ProfileImg" class="" style="width: 50px; border-radius: 25px;" />
+                <h4 class="me-2">@user.UserName</h4>
+            </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            <a class="nav-link text-dark" asp-controller="Posts" asp-action="Create">Crear post</a>
+        }
+    </div>
+    <div class="col-8 d-flex justify-content-center" style="border: 1px solid red;">
+        <div class="border border-1 d-flex justify-content-center" style="width: 45% !important">
+            <h4>anuncios</h4>
+        </div>
+    </div>
 </div>
+

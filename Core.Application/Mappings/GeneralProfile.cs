@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Core.Application.ViewModels.User;
+using Core.Application.ViewModels.PostVM;
+using Core.Application.ViewModels.UserVM;
 using Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Core.Application.Mappings
     {
         public GeneralProfile()
         {
+            #region user
             CreateMap<User, UserViewModel>()
                 .ReverseMap()
                 .ForMember(dest => dest.Created, opt => opt.Ignore())
@@ -27,7 +29,22 @@ namespace Core.Application.Mappings
               .ForMember(dest => dest.Created, opt => opt.Ignore())
               .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
               .ForMember(dest => dest.LastModified, opt => opt.Ignore())
-              .ForMember(dest => dest.LastModifiedBy, opt => opt.Ignore());
+              .ForMember(dest => dest.LastModifiedBy, opt => opt.Ignore())
+              .ForMember(dest => dest.Friends, opt => opt.Ignore())
+              .ForMember(dest => dest.Posts, opt => opt.Ignore());
+            #endregion
+
+            #region posts
+            CreateMap<Post, SavePostViewModel>()
+               .ForMember(dest => dest.File, opt => opt.Ignore())
+               .ReverseMap()
+               .ForMember(dest => dest.Created, opt => opt.Ignore())
+               .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+               .ForMember(dest => dest.LastModified, opt => opt.Ignore())
+               .ForMember(dest => dest.LastModifiedBy, opt => opt.Ignore())
+               .ForMember(dest => dest.User, opt => opt.Ignore())
+               .ForMember(dest => dest.Comments, opt => opt.Ignore());
+            #endregion
         }
     }
 }

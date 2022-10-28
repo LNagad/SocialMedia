@@ -1,4 +1,5 @@
-﻿using Core.Application.ViewModels.UserVM;
+﻿using Core.Application.ViewModels.PostVM;
+using Core.Application.ViewModels.UserVM;
 using Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Interfaces.Services
 {
-    public interface IUserService : IGenericService<User, UserViewModel, SaveUserViewModel>
+    public interface IPostService : IGenericService<Post, PostViewModel, SavePostViewModel>
     {
-        Task<UserViewModel> Login(LoginViewModel loginVm);
+     
     }
 }

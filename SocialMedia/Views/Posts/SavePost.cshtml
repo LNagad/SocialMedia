@@ -1,0 +1,25 @@
+﻿@using Core.Application.ViewModels.PostVM
+
+@model SavePostViewModel
+
+<div class="col-12 d-flex justify-content-center">
+    <div class="col-4">
+        <div class="card text-center">
+            <div class="card-header">
+                <h4>Crear publicacion</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-action="Create" asp-controller="Posts" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <textarea asp-for="Body" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <input asp-for="File" class="form-control" />
+                    </div>
+                    <input asp-for="Id" hidden />
+                    <button type="submit" class="w-100 btn btn-primary">Publicar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
