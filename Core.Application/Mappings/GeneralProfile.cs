@@ -35,6 +35,12 @@ namespace Core.Application.Mappings
             #endregion
 
             #region posts
+            CreateMap<Post, PostViewModel>()
+            .ReverseMap()
+            .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+            .ForMember(dest => dest.LastModifiedBy, opt => opt.Ignore());
+                
+
             CreateMap<Post, SavePostViewModel>()
                .ForMember(dest => dest.File, opt => opt.Ignore())
                .ReverseMap()

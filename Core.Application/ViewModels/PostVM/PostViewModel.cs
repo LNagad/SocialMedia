@@ -16,6 +16,8 @@ namespace Core.Application.ViewModels.PostVM
         public string? ImagePost { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public string? Created { get; set; }
+        public string? LastModified { get; set; }
         public ICollection<Comments>? Comments { get; set; }
     }
 }

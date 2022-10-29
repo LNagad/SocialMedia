@@ -1,0 +1,25 @@
+﻿@using Core.Application.ViewModels.PostVM
+@model SavePostViewModel
+@{
+
+}
+
+<div class="col-12 d-flex justify-content-center">
+    <div class="col-5">
+        <div class="card-header bg-dark d-flex justify-content-center align-items-center">
+            <h4 class="text-white">
+                Estas seguro que deseas eliminar la publicacion: <span class="text-danger">@Model.Tittle</span>?
+            </h4>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-controller="Posts" asp-action="Delete" class="d-flex flex-column align-items-center">
+
+                <div class="col-12 d-flex justify-content-between">
+                    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Volver atras</a>
+                    <button class="btn btn-danger">Eliminar</button>
+                </div>
+                <input asp-for="Id" hidden />
+            </form>
+        </div>
+    </div>
+</div>

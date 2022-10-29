@@ -22,3 +22,37 @@ body {
     overflow: hidden;
     resize: none;
 }
+
+
+.postContainer{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 500px !important;
+}
+
+.postContainerBorders{
+    border-radius: 5px;
+    background-color: #fff;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    padding: 1rem;
+}
+
+.postContainerHeader{
+    display:flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.postImg {
+    object-fit: cover;
+    max-height: 600px !important;
+}
+
+.postUserImg {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+}

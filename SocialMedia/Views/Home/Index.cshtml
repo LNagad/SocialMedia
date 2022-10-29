@@ -2,17 +2,19 @@
 @using Core.Application.Helpers
 @using Microsoft.AspNetCore.Http;
 @using Core.Application.ViewModels.UserVM
-@model SavePostViewModel
+@model List<PostViewModel>
+
 @inject IHttpContextAccessor httpContext;
 @{
     UserViewModel user = httpContext.HttpContext.Session.Get<UserViewModel>("user");
     ViewData["Title"] = "Home Page";
 }
-<div class="col-12 d-flex" style="border: 1px solid red;">
-    <div class="col-2" style="border: 1px solid red;">
+
+<div class="col-12 d-flex">
+    <div class="col-2 d-flex flex-column align-items-baseline">
         @if (user != null)
         {
-            <div class="d-flex align-items-center align-content-center h-100">
+            <div class="d-flex align-items-center align-content-center">
                 <img src="@user.ProfileImg" class="" style="width: 50px; border-radius: 25px;" />
                 <h4 class="me-2">@user.UserName</h4>
             </div>
@@ -20,10 +22,53 @@
             <a class="nav-link text-dark" asp-controller="Posts" asp-action="Create">Crear post</a>
         }
     </div>
-    <div class="col-8 d-flex justify-content-center" style="border: 1px solid red;">
-        <div class="border border-1 d-flex justify-content-center" style="width: 45% !important">
-            <h4>anuncios</h4>
+    <div class="col-8 d-flex justify-content-center">
+        <div class="postContainer">
+            
+            @foreach (PostViewModel post in Model)
+            {
+                <div class="postContainerBorders">
+                    <div class="postContainerHeader">
+                        <div class="d-flex flex-row justify-content-center align-items-center">
+                            <img class="postUserImg" src="@post.User.ProfileImg" />
+                            <div class="ms-2">
+                                <p class="m-0 fw-bold" style="font-size: 13px;">@post.User.UserName</p>
+                                <p class="m-0" style="font-size: 13px;">@(post.Created != null ? post.Created : post.LastModified)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="dropdown mt-1">
+                            <button class="btn btn-secondary " type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ...
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Posts" asp-action="Edit"
+                                   asp-route-id="@post.Id">Editar</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Posts" asp-action="Delete"
+                                   asp-route-id="@post.Id">Eliminar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <p>@post.Body</p>
+
+                        <div class="w-100">
+                            <img class="w-100 postImg" src="@post.ImagePost" />
+                        </div>
+
+                    </div>
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        <div class="mt-1">
+                            <h6>Comentarios</h6>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
-

@@ -1,15 +1,20 @@
 ﻿@using Core.Application.ViewModels.PostVM
-
+@{
+    bool editMode = Model.Id != 0 ? true : false;
+}
 @model SavePostViewModel
 
 <div class="col-12 d-flex justify-content-center">
     <div class="col-4">
         <div class="card text-center">
             <div class="card-header">
-                <h4>Crear publicacion</h4>
+                <h4>@(editMode ? $"Editando publicacion: {Model.Tittle}" : "Crear publicacion")</h4>
             </div>
             <div class="card-body">
-                <form method="post" asp-action="Create" asp-controller="Posts" enctype="multipart/form-data">
+                <form method="post" asp-action="@(editMode ?"Edit":"Create")" asp-controller="Posts" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <input asp-for="Tittle" class="form-control" />
+                    </div>
                     <div class="mb-3">
                         <textarea asp-for="Body" class="form-control"></textarea>
                     </div>
