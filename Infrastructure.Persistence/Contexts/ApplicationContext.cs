@@ -15,6 +15,8 @@ namespace Infrastructure.Persistence.Contexts
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -45,14 +47,14 @@ namespace Infrastructure.Persistence.Contexts
             #region tables
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Post>().ToTable("Posts");
-            modelBuilder.Entity<Comments>().ToTable("Comments");
+            modelBuilder.Entity<Comment>().ToTable("Comments");
             modelBuilder.Entity<Friends>().ToTable("Friends");
             #endregion
 
             #region "primary keys"
             modelBuilder.Entity<User>().HasKey(p => p.Id);
             modelBuilder.Entity<Post>().HasKey(p => p.Id);
-            modelBuilder.Entity<Comments>().HasKey(p => p.Id);
+            modelBuilder.Entity<Comment>().HasKey(p => p.Id);
             modelBuilder.Entity<Friends>().HasKey(p => p.Id);
             #endregion
 
@@ -71,7 +73,7 @@ namespace Infrastructure.Persistence.Contexts
 
 
             modelBuilder.Entity<Post>()
-                .HasMany<Comments>(post => post.Comments)
+                .HasMany<Comment>(post => post.Comments)
                 .WithOne(comm => comm.Post)
                 .HasForeignKey(comm => comm.PostId)
                 .OnDelete(DeleteBehavior.Cascade);

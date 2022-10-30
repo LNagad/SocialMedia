@@ -7,32 +7,74 @@ html {
     font-size: 16px;
   }
 }
-
+.borderBottom{
+    border-bottom: 2px solid rgba(000, 000, 000, 0.1);
+    padding-bottom: 7px;
+}
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #F0F2F5;
+}
+
+/*header*/
+.linkApp{
+    padding: 10px 40px 10px 40px !important;
+    border-radius: 1rem;
+}
+.linkApp:active {
+    border-bottom: 2px solid #000;
+}
+.linkApp:focus{
+    border-bottom: 2px solid #000;
+}
+.linkApp:hover {
+    background-color: #e4e6eb;
+    font-weight: bold !important;
+}
+
+.linkApp_active {
+    border-bottom: 5px solid #1A74E4;
 }
 
 #postBody {
     display: block;
     overflow: hidden;
     resize: none;
+
 }
 
+.postOptionsBTN{
+    border: none;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 50%;
+    font-size: 19px;
+}
+.postOptionsBTN:hover {
+    background-color: #e4e6eb;
+}
+.postOptionsBTN > p {
+    margin-top: 5px;
+}
 
-.postContainer{
-    display:flex;
+.postContainer {
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 500px !important;
+    width: 680px !important;
 }
 
 .postContainerBorders{
-    border-radius: 5px;
+    border-radius: 1.5rem;
     background-color: #fff;
     margin-bottom: 1rem;
     border: 1px solid rgba(128, 128, 128, 0.3);
@@ -42,11 +84,11 @@ body {
 .postContainerHeader{
     display:flex;
     justify-content: space-between;
-    align-items: baseline;
 }
 
 .postImg {
     object-fit: cover;
+    padding: 0 !important;
     max-height: 600px !important;
 }
 
@@ -55,4 +97,45 @@ body {
     height: 38px;
     border-radius: 50%;
     object-fit: cover;
+    border: 1px solid rgb(128, 128, 128, 0.7)
+}
+
+/*------------------------comments*/
+.placeComment {
+    width: 100%;
+    background-color: #e4e6eb;
+    border-radius: 15px;
+    font-size: 14px;
+    outline: none;
+    border: none;
+}
+.placeComment:focus {
+    background-color: #e4e6eb !important;
+}
+
+.commentUserImg {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: -20px;
+    border: 1px solid rgb(128, 128, 128, 0.7)
+}
+.commentDiv {
+    background-color: #e4e6eb;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: start;
+    border-radius: 15px;
+    padding: 7px 10px 0 10px;
+}
+.commentUser{
+    font-size: 12px;
+    font-weight: bold;
+}
+.commentPost{
+    font-size: 13px;
+    margin-top: -15px;
 }

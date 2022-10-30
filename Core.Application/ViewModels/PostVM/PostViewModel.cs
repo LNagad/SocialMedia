@@ -1,4 +1,5 @@
-﻿using Core.Application.ViewModels.UserVM;
+﻿using Core.Application.ViewModels.CommentVM;
+using Core.Application.ViewModels.UserVM;
 using Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,6 @@ namespace Core.Application.ViewModels.PostVM
         public User User { get; set; }
         public string? Created { get; set; }
         public string? LastModified { get; set; }
-        public ICollection<Comments>? Comments { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
     }
 }

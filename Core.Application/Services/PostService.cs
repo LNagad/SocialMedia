@@ -18,15 +18,17 @@ namespace Core.Application.Services
     public class PostService : GenericService<Post, PostViewModel, SavePostViewModel>, IPostService
     {
         private readonly IPostRepository _postRepository;
+        private readonly ICommentService _commentService;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserViewModel _user;
-        public PostService(IPostRepository postRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(postRepository, mapper)
+        public PostService(IPostRepository postRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor, ICommentService commentService) : base(postRepository, mapper)
         {
             _postRepository = postRepository;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             _user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+            _commentService = commentService;
         }
 
         public override async Task UpdateAsync(SavePostViewModel vm, int id)
@@ -45,15 +47,18 @@ namespace Core.Application.Services
 
             List<Post> list = await _postRepository.GetAllWithIncludeAsync(parameters);
 
-            return  list.Select(post => new PostViewModel
+            List<Comment> listComment = await _commentService.GetAllWithIncludeAsync();
+
+            return list.Select(post => new PostViewModel
             {
                 Id = post.Id,
+                Tittle = post.Tittle,
                 Body = post.Body,
                 ImagePost = post.ImagePost,
                 User = post.User,
                 Created = post.Created != null ? post.Created.Value.ToString("MMMM dd, yyyy") : null,
                 LastModified = post.LastModified != null ? post.LastModified.Value.ToString("MMMM dd, yyyy") : null,
-                Comments = post.Comments != null ? post.Comments.ToList() : null
+                Comments = listComment.Where(p => p.PostId == post.Id).ToList(),
             }).ToList();
         }
     }

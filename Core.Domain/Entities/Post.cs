@@ -15,6 +15,6 @@ namespace Core.Domain.Entities
         public string? ImagePost { get; set; }
         public int UserId { get; set; }  
         public User User { get; set; }
-        public ICollection<Comments>? Comments { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
     }
 }

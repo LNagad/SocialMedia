@@ -18,36 +18,31 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
             <div class="container-fluid">
+                <div class="navbar-collapse collapse d-sm-inline-flex">
+                    <ul class="navbar-nav flex-grow-1 d-flex justify-content-between">
+                        <div class="w-100 d-flex justify-content-center">
+                        <li class="nav-item me-5">
+                            <a class="nav-link text-dark linkApp linkApp_active" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item me-5">
+                            <a class="nav-link text-dark linkApp" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                </div>
 
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SocialMedia</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <div class="w-75 d-flex">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                </div>
-                <div class="w-25 d-flex justify-content-end">
-                    <a class="nav-link text-dark" asp-controller="User" asp-action="Logout">@(user != null ? "cerrar sesion" : "Iniciar sesion")</a>
-                </div>
                 </ul>
             </div>
             </div>
         </nav>
     </header>
 
-    <main role="main" class="col-12 d-flex justify-content-center">
-        @RenderBody()
-    </main>
+    <div>
+        <main role="main" class="col-12 d-flex justify-content-center" style="margin-top: 5rem;">
+            @RenderBody()
+
+        </main>
+    </div>
 
 
     <footer class="border-top footer text-muted">
