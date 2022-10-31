@@ -1,0 +1,29 @@
+﻿@using Core.Application.ViewModels.FriendsVM
+@model List<FriendsViewModel>
+@using Core.Application.Helpers
+@using Microsoft.AspNetCore.Http;
+@using Core.Application.ViewModels.UserVM
+@inject IHttpContextAccessor httpContext;
+@{
+    UserViewModel user = httpContext.HttpContext.Session.Get<UserViewModel>("user");
+}
+
+
+<div class="col-11">
+    <div>
+        <a class="btn btn-outline-primary" asp-action="Create" asp-controller="Friends">Agregar amigo</a>
+    </div>
+    <div>
+        @if(Model != null) {
+            @foreach(FriendsViewModel friend in Model) {
+                if(friend.FriendId == user.Id) {
+                    <h4>@friend.User.UserName</h4>
+                } else {
+                    <h4>@friend.UserName</h4>
+                }
+                
+            }
+        }
+
+    </div>
+</div>

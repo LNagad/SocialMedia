@@ -2,16 +2,19 @@
 using Core.Application.Helpers;
 using Core.Application.Interfaces.Repositories;
 using Core.Application.Interfaces.Services;
+using Core.Application.ViewModels.FriendsVM;
 using Core.Application.ViewModels.PostVM;
 using Core.Application.ViewModels.UserVM;
 using Core.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Core.Application.Services
 {
@@ -19,16 +22,19 @@ namespace Core.Application.Services
     {
         private readonly IPostRepository _postRepository;
         private readonly ICommentService _commentService;
+        private readonly IFriendsService _friendsService;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserViewModel _user;
-        public PostService(IPostRepository postRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor, ICommentService commentService) : base(postRepository, mapper)
+        public PostService(IPostRepository postRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor,
+            ICommentService commentService, IFriendsService friendsService) : base(postRepository, mapper)
         {
             _postRepository = postRepository;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             _user = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
             _commentService = commentService;
+            _friendsService = friendsService;
         }
 
         public override async Task UpdateAsync(SavePostViewModel vm, int id)
@@ -43,13 +49,16 @@ namespace Core.Application.Services
 
         public virtual async Task<List<PostViewModel>> GetAllWithIncludeAsync()
         {
-            List<string> parameters = new () {"User", "Comments"};
 
-            List<Post> list = await _postRepository.GetAllWithIncludeAsync(parameters);
+            List<Post> list = await _postRepository.GetAllWithIncludeAsync(new List<string> { "User", "Comments" });
 
             List<Comment> listComment = await _commentService.GetAllWithIncludeAsync();
 
-            return list.Select(post => new PostViewModel
+            List<FriendsViewModel> friendsList = await _friendsService.GetAllViewModel();
+
+            var friendListX = friendsList.Where(p => p.UserId == _user.Id || p.FriendId == _user.Id).ToList();
+
+            List<PostViewModel> listX = list.Select(post => new PostViewModel
             {
                 Id = post.Id,
                 Tittle = post.Tittle,
@@ -60,6 +69,20 @@ namespace Core.Application.Services
                 LastModified = post.LastModified != null ? post.LastModified.Value.ToString("MMMM dd, yyyy") : null,
                 Comments = listComment.Where(p => p.PostId == post.Id).ToList(),
             }).ToList();
+
+            foreach (var item in friendListX)
+            {
+                if(item.UserId == _user.Id)
+                {
+                    listX = listX.Where(p => p.User.Id == item.FriendId).ToList();
+                } else
+                {
+                    listX = listX.Where(p => p.User.Id == item.FriendId || p.User.Id == item.UserId).ToList();
+                }
+
+            }
+
+            return listX;
         }
     }
 }

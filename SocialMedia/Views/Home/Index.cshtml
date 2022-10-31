@@ -10,7 +10,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="col-12 d-flex justify-content-between" >
+<div class="col-12 d-flex justify-content-between">
     <div class="col-2 d-flex flex-column align-items-baseline position-fixed" style="margin-left: 1rem;">
         @if (user != null)
         {
@@ -25,67 +25,75 @@
     </div>
     <div class="col-8 d-flex justify-content-center" style="margin-left: 18%;">
         <div class="postContainer">
-
-            @foreach (PostViewModel post in Model)
+            @if (Model.Count == 0)
             {
-                <div class="postContainerBorders" style="">
-                    <div class="postContainerHeader mb-3 borderBottom">
-                        <div class="d-flex flex-row justify-content-center align-items-center ">
-                            <img class="postUserImg" src="@post.User.ProfileImg" />
-                            <div class="ms-2">
-                                <p class="m-0 fw-bold" style="font-size: 13px;">@post.User.UserName</p>
-                                <p class="m-0" style="font-size: 13px;">@(post.Created != null ? post.Created : post.LastModified)</p>
+                <div class="d-flex justify-content-center">
+                    <h4 class="text-info">Tus amigos no han posteado nada aun :D</h4>
+                </div>
+            }
+            else
+            {
+                @foreach (PostViewModel post in Model)
+                {
+                    <div class="postContainerBorders" style="">
+                        <div class="postContainerHeader mb-3 borderBottom">
+                            <div class="d-flex flex-row justify-content-center align-items-center ">
+                                <img class="postUserImg" src="@post.User.ProfileImg" />
+                                <div class="ms-2">
+                                    <p class="m-0 fw-bold" style="font-size: 13px;">@post.User.UserName</p>
+                                    <p class="m-0" style="font-size: 13px;">@(post.Created != null ? post.Created : post.LastModified)</p>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="postOptionsBTN" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown">
+                                    <p>...</p>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Posts" asp-action="Edit"
+                                   asp-route-id="@post.Id">Editar</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Posts" asp-action="Delete"
+                                   asp-route-id="@post.Id">Eliminar</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="dropdown">
-                            <button class="postOptionsBTN" type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown">
-                                <p>...</p>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" asp-controller="Posts" asp-action="Edit"
-                                   asp-route-id="@post.Id">Editar</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-controller="Posts" asp-action="Delete"
-                                   asp-route-id="@post.Id">Eliminar</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-center borderBottom">
-                        <p>@post.Body</p>
+                        <div class="d-flex flex-column justify-content-center borderBottom">
+                            <p>@post.Body</p>
 
-                        <div class="w-100">
-                            <img class="w-100 postImg" src="@post.ImagePost" />
-                        </div>
+                            <div class="w-100">
+                                <img class="w-100 postImg" src="@post.ImagePost" />
+                            </div>
 
-                    </div>
-                    <div class="d-flex flex-column justify-content-between align-items-center">
-                        <div class="w-100 mt-2">
-                            <form class="d-flex w-100 align-items-center" method="post" asp-action="Comment" asp-controller="Comment">
-                                <img class="postUserImg me-2" src="@user.ProfileImg" />
-                                <input name="comment" class="form-control placeComment shadow-none" placeholder="Escribe un comentario publico...">
-                                <input name="postId" type="number"  value="@post.Id" hidden>
-                                <button type="submit" class="btn btn-primary">></button>
-                            </form>
                         </div>
-                        <div class="mt-1 w-100">
+                        <div class="d-flex flex-column justify-content-between align-items-center">
+                            <div class="w-100 mt-2">
+                                <form class="d-flex w-100 align-items-center" method="post" asp-action="Comment" asp-controller="Comment">
+                                    <img class="postUserImg me-2" src="@user.ProfileImg" />
+                                    <input name="comment" class="form-control placeComment shadow-none" placeholder="Escribe un comentario publico...">
+                                    <input name="postId" type="number" value="@post.Id" hidden>
+                                    <button type="submit" class="btn btn-primary">></button>
+                                </form>
+                            </div>
+                            <div class="mt-1 w-100">
 
-                            @foreach (var item in post.Comments)
-                            {
-                                <div class="d-flex align-items-center mb-1">
-                                    <img class="me-2 commentUserImg" src="@item.User.ProfileImg" />
-                                    <div class="commentDiv">
-                                        <p class="commentUser">@item.User.UserName</p>
-                                        <p class="commentPost">@item.Content</p>
+                                @foreach (var item in post.Comments)
+                                {
+                                    <div class="d-flex align-items-center mb-1">
+                                        <img class="me-2 commentUserImg" src="@item.User.ProfileImg" />
+                                        <div class="commentDiv">
+                                            <p class="commentUser">@item.User.UserName</p>
+                                            <p class="commentPost">@item.Content</p>
+                                        </div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
         </div>
     </div>

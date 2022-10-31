@@ -11,9 +11,15 @@ html {
     border-bottom: 2px solid rgba(000, 000, 000, 0.1);
     padding-bottom: 7px;
 }
+
+.noList{
+    text-decoration: none;
+    list-style: none;
+}
+
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {

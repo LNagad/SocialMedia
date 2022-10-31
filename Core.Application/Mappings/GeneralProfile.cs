@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Application.ViewModels.CommentVM;
+using Core.Application.ViewModels.FriendsVM;
 using Core.Application.ViewModels.PostVM;
 using Core.Application.ViewModels.UserVM;
 using Core.Domain.Entities;
@@ -53,7 +54,6 @@ namespace Core.Application.Mappings
                .ForMember(dest => dest.Comments, opt => opt.Ignore());
             #endregion
 
-
             #region comments
             CreateMap<Comment, CommentViewModel>()
                 .ForMember(dest => dest.User, opt => opt.Ignore())
@@ -63,6 +63,23 @@ namespace Core.Application.Mappings
             CreateMap<Comment, SaveCommentViewModel>()
                 .ReverseMap()
                 .ForMember(dest => dest.Post, opt => opt.Ignore());
+            #endregion
+
+            #region friends
+            CreateMap<Friends, FriendsViewModel>()
+               .ReverseMap()
+               .ForMember(dest => dest.Created, opt => opt.Ignore())
+               .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+               .ForMember(dest => dest.LastModified, opt => opt.Ignore())
+               .ForMember(dest => dest.LastModifiedBy, opt => opt.Ignore());
+
+            CreateMap<Friends, SaveFriendsViewModel>()
+               .ReverseMap()
+               .ForMember(dest => dest.Created, opt => opt.Ignore())
+               .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+               .ForMember(dest => dest.LastModified, opt => opt.Ignore())
+               .ForMember(dest => dest.LastModifiedBy, opt => opt.Ignore())
+               .ForMember(dest => dest.User, opt => opt.Ignore());
             #endregion
         }
     }

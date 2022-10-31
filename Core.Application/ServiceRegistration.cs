@@ -21,6 +21,7 @@ namespace Core.Application
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IFriendsService, FriendsService>();
             #endregion
         }
     }

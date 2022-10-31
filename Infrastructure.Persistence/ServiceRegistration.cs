@@ -37,6 +37,7 @@ namespace Infrastructure.Persistence
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<ICommentRepository, CommentRepository>();
+            services.AddTransient<IFriendsRepository, FriendsRepository>();
             #endregion
         }
     }
