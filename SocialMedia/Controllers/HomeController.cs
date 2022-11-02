@@ -33,7 +33,9 @@ namespace SocialMedia.Controllers
                 return RedirectToRoute(new { controller = "User", action = "Login" });
             }
 
-            return View(await _postService.GetAllWithIncludeAsync());
+            ViewBag.Posts = await _postService.GetAllWithIncludeAsync();
+
+            return View(new SavePostViewModel() );
         }
     }
 }

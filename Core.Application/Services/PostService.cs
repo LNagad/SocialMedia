@@ -47,9 +47,8 @@ namespace Core.Application.Services
             await _postRepository.UpdateAsync(postFinded, id);
         }
 
-        public virtual async Task<List<PostViewModel>> GetAllWithIncludeAsync()
+        public async Task<List<PostViewModel>> GetAllWithIncludeAsyncFriends()
         {
-
             List<Post> list = await _postRepository.GetAllWithIncludeAsync(new List<string> { "User", "Comments" });
 
             List<Comment> listComment = await _commentService.GetAllWithIncludeAsync();
@@ -57,6 +56,8 @@ namespace Core.Application.Services
             List<FriendsViewModel> friendsList = await _friendsService.GetAllViewModel();
 
             var friendListX = friendsList.Where(p => p.UserId == _user.Id || p.FriendId == _user.Id).ToList();
+
+            List<PostViewModel> listT = new();
 
             List<PostViewModel> listX = list.Select(post => new PostViewModel
             {
@@ -74,15 +75,49 @@ namespace Core.Application.Services
             {
                 if(item.UserId == _user.Id)
                 {
-                    listX = listX.Where(p => p.User.Id == item.FriendId).ToList();
+                    listT = listX.Where(p => p.User.Id == item.FriendId).ToList();
                 } else
                 {
-                    listX = listX.Where(p => p.User.Id == item.FriendId || p.User.Id == item.UserId).ToList();
+                    listX = listX.Where(p => p.User.Id == item.UserId).ToList();
+
+                    foreach (var x in listX)
+                    {
+                        var post = new PostViewModel();
+                        post.Id = x.Id;
+                        post.Tittle = x.Tittle;
+                        post.Body = x.Body;
+                        post.ImagePost = x.ImagePost;
+                        post.User = x.User;
+                        post.Created = x.Created;
+                        post.LastModified = x.LastModified;
+                        post.Comments = x.Comments;
+
+                        listT.Add(post);
+                    }
+
                 }
 
             }
+            return listT;
+        }
 
-            return listX;
+        public async Task<List<PostViewModel>> GetAllWithIncludeAsync()
+        {
+            List<Post> list = await _postRepository.GetAllWithIncludeAsync(new List<string> { "User", "Comments" });
+
+            List<Comment> listComment = await _commentService.GetAllWithIncludeAsync();
+
+            return list.Where(p => p.UserId == _user.Id).Select(post => new PostViewModel
+            {
+                Id = post.Id,
+                Tittle = post.Tittle,
+                Body = post.Body,
+                ImagePost = post.ImagePost,
+                User = post.User,
+                Created = post.Created != null ? post.Created.Value.ToString("MMMM dd, yyyy") : null,
+                LastModified = post.LastModified != null ? post.LastModified.Value.ToString("MMMM dd, yyyy") : null,
+                Comments = listComment.Where(p => p.PostId == post.Id).ToList(),
+            }).ToList();
         }
     }
 }

@@ -12,5 +12,6 @@ namespace Core.Application.Interfaces.Services
     public interface IPostService : IGenericService<Post, PostViewModel, SavePostViewModel>
     {
         Task<List<PostViewModel>> GetAllWithIncludeAsync();
+        Task<List<PostViewModel>> GetAllWithIncludeAsyncFriends();
     }
 }

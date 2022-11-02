@@ -1,4 +1,20 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿document.querySelectorAll('.nav-link').forEach(link => {
+    if (link.href === window.location.href) {
+        link.setAttribute('aria-current', 'page')
+    }
+    //aria - current="page"
+})
 
-// Write your JavaScript code.
+const input = document.querySelector('#postOpen');
+const modal = document.querySelector('#exampleModal');
+
+input.addEventListener('click', updateValue);
+
+
+
+function updateValue(e) {
+
+    console.log("hola")
+    
+    $("#exampleModal").modal('show');
+}

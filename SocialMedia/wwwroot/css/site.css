@@ -28,23 +28,18 @@ body {
 }
 
 /*header*/
-.linkApp{
+.nav-link {
     padding: 10px 40px 10px 40px !important;
     border-radius: 1rem;
 }
-.linkApp:active {
-    border-bottom: 2px solid #000;
-}
-.linkApp:focus{
-    border-bottom: 2px solid #000;
-}
-.linkApp:hover {
-    background-color: #e4e6eb;
-    font-weight: bold !important;
+
+.nav-link[aria-current="page"] {
+    border-bottom: 5px solid #1A74E4;
 }
 
-.linkApp_active {
-    border-bottom: 5px solid #1A74E4;
+.nav-link:hover {
+    background-color: #e4e6eb;
+    font-weight: bold !important;
 }
 
 #postBody {

@@ -2,11 +2,12 @@
 @using Core.Application.Helpers
 @using Microsoft.AspNetCore.Http;
 @using Core.Application.ViewModels.UserVM
-@model List<PostViewModel>
+@model SavePostViewModel
 
 @inject IHttpContextAccessor httpContext;
 @{
     UserViewModel user = httpContext.HttpContext.Session.Get<UserViewModel>("user");
+
     ViewData["Title"] = "Home Page";
 }
 
@@ -23,17 +24,63 @@
             <a class="nav-link text-dark" asp-controller="User" asp-action="Logout">Cerrar sesion</a>
         }
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear nuevo post</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-action="Create" asp-controller="Posts" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <input asp-for="Tittle" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <textarea asp-for="Body" class="form-control"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <input asp-for="File" class="form-control" />
+                        </div>
+                        <input asp-for="Id" hidden />
+                        <button type="submit" class="w-100 btn btn-primary">Publicar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="col-8 d-flex justify-content-center" style="margin-left: 18%;">
         <div class="postContainer">
-            @if (Model.Count == 0)
+            <div class="w-100">
+                <div class="postContainerBorders d-flex flex-column ">
+                    <div class="w-100 d-flex borderBottom mb-2 pb-3">
+                        <img class="postUserImg me-2" src="@user.ProfileImg" />
+                        <input id="postOpen" class="form-control placeComment shadow-none" placeholder="Que estas pensando, @user.Name?">
+                    </div>
+                    @*class="d-flex w-100 align-items-center"*@
+                    <div class="w-100 d-flex align-items-center justify-content-evenly" style="height: 1.9rem !important;">
+                        <p class="nav-link mt-3">Foto</p>
+                        <p class="nav-link mt-3">Video</p>
+                        <p class="nav-link mt-3">Gif</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            @if (ViewBag.Posts.Count == 0)
             {
                 <div class="d-flex justify-content-center">
-                    <h4 class="text-info">Tus amigos no han posteado nada aun :D</h4>
+                    <h4 class="text-info">No has posteado nada aun :D</h4>
                 </div>
             }
             else
             {
-                @foreach (PostViewModel post in Model)
+                @foreach (PostViewModel post in ViewBag.Posts)
                 {
                     <div class="postContainerBorders" style="">
                         <div class="postContainerHeader mb-3 borderBottom">
@@ -98,3 +145,8 @@
         </div>
     </div>
 </div>
+@section scripts{
+    <script>
+
+    </script>
+}
