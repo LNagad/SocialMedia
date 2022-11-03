@@ -45,6 +45,14 @@ namespace SocialMedia.Controllers
             {
                 return View("SavePost", vm);
             }
+
+            if (vm.Body == null && vm.File == null)
+            {
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+
+
+
             vm.UserId = _user.Id;
 
             SavePostViewModel postVM = await _postService.AddAsync(vm);

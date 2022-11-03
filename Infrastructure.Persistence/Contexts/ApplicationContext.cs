@@ -76,7 +76,8 @@ namespace Infrastructure.Persistence.Contexts
                 .HasMany<Comment>(post => post.Comments)
                 .WithOne(comm => comm.Post)
                 .HasForeignKey(comm => comm.PostId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
+
             #endregion
 
             #region "tables properties"
@@ -87,11 +88,10 @@ namespace Infrastructure.Persistence.Contexts
                 modelBuilder.Entity<User>().Property(p => p.Name).IsRequired();
                 modelBuilder.Entity<User>().Property(p => p.LastName).IsRequired();
                 modelBuilder.Entity<User>().Property(p => p.Phone).IsRequired();
-                modelBuilder.Entity<User>().Property(p => p.ProfileImg).IsRequired();
+                modelBuilder.Entity<User>().Property(p => p.ProfileImg).IsRequired(false);
                 modelBuilder.Entity<User>().Property(p => p.Email).IsRequired();
                 modelBuilder.Entity<User>().Property(p => p.Password).IsRequired();
                 modelBuilder.Entity<User>().Property(p => p.Enabled).IsRequired();
-                modelBuilder.Entity<User>().Property(p => p.Enabled).HasDefaultValue(false);
 
             #endregion
 

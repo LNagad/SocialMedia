@@ -22,7 +22,7 @@ namespace Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Core.Domain.Entities.Comments", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,6 +55,8 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments", (string)null);
                 });
@@ -153,10 +155,8 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Enabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                    b.Property<int>("Enabled")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
@@ -181,7 +181,6 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfileImg")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
@@ -196,15 +195,23 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.Comments", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Comment", b =>
                 {
                     b.HasOne("Core.Domain.Entities.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Core.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Post");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Friends", b =>

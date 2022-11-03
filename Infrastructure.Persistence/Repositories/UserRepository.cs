@@ -24,7 +24,7 @@ namespace Infrastructure.Persistence.Repositories
         public override async Task<User> AddAsync(User user)
         {
             user.Password = PasswordEncryption.ComputeSha256Hash(user.Password);
-
+            user.Enabled = 0;
             return await base.AddAsync(user);
         }
 

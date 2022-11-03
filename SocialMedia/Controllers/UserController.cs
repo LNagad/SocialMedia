@@ -40,12 +40,12 @@ namespace SocialMedia.Controllers
 
             if (userVM != null)
             {
-                if (!userVM.Enabled)
-                {
-                    ModelState.AddModelError("userValidationEnabled", "Debe activar su usuario para poder iniciar sesion");
+                //if (!userVM.Enabled)
+                //{
+                //    ModelState.AddModelError("userValidationEnabled", "Debe activar su usuario para poder iniciar sesion");
 
-                    return View(vm);
-                }
+                //    return View(vm);
+                //}
                     
                 HttpContext.Session.Set<UserViewModel>("user", userVM);
 

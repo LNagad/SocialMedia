@@ -18,11 +18,11 @@ namespace Infrastructure.Persistence.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfileImg = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfileImg = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    Enabled = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -105,6 +105,11 @@ namespace Infrastructure.Persistence.Migrations
                         name: "FK_Comments_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -113,6 +118,11 @@ namespace Infrastructure.Persistence.Migrations
                 name: "IX_Comments_PostId",
                 table: "Comments",
                 column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Friends_UserId",
