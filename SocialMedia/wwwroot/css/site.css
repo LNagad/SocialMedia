@@ -12,7 +12,7 @@ html {
     padding-bottom: 7px;
 }
 
-.noList{
+.noList {
     text-decoration: none;
     list-style: none;
 }
@@ -48,8 +48,34 @@ body {
     resize: none;
 
 }
+.image-upload {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0 8px 0;
+    border-bottom: 2px solid rgba(000, 000, 000, 0.1);
+    border-top: 2px solid rgba(000, 000, 000, 0.1);
+    padding: 5px 0px 5px 0px;
+}
+.image-upload > input {
+    visibility: hidden;
+}
+.file-link-img {
+    display: flex; 
+    justify-content: center;
+    
+   
+}
+.file-input-img {
+    color: seagreen;
+    font-size: 1.6rem;
+}
 
-.postOptionsBTN{
+.file-link-img:hover{
+    cursor: pointer;
+}
+
+.postOptionsBTN {
     border: none;
     width: 28px;
     height: 28px;
@@ -101,14 +127,20 @@ body {
     border: 1px solid rgb(128, 128, 128, 0.7)
 }
 
+#postX {
+    overflow: hidden;
+    resize: none;
+}
+
 /*------------------------comments*/
 .placeComment {
     width: 100%;
     background-color: #e4e6eb;
     border-radius: 15px;
-    font-size: 14px;
+    font-size: 18px;
     outline: none;
     border: none;
+    color: #000000;
 }
 .placeComment:focus {
     background-color: #e4e6eb !important;

@@ -61,12 +61,22 @@ namespace SocialMedia.Controllers
 
         public IActionResult Register()
         {
+            if (_validateUser.HasUser())
+            {
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+
             return View(new SaveUserViewModel());
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(SaveUserViewModel vm)
         {
+            if (_validateUser.HasUser())
+            {
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(vm);

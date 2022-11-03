@@ -3,7 +3,7 @@
 @using Core.Application.ViewModels.UserVM
 @using Core.Application.Helpers
 @using Microsoft.AspNetCore.Http;
-@model List<PostViewModel>
+@model SaveFriendsViewModel
 @inject IHttpContextAccessor httpContext;
 @{
     UserViewModel user = httpContext.HttpContext.Session.Get<UserViewModel>("user");
@@ -25,11 +25,41 @@
                 }
             }
         }
-        <a class="btn btn-outline-primary" asp-action="Create" asp-controller="Friends">Agregar amigo</a>
+        <a class="btn btn-outline-primary" id="postOpen">Agregar amigo</a>
     </div>
     <div class="col-8 d-flex justify-content-center" style="margin-left: 18%;">
         <div class="postContainer">
-            @if (Model.Count == 0)
+
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar amigo</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" asp-action="Create" asp-controller="Friends">
+                                <div class="d-flex justify-content-start">
+                                    @Html.ValidationSummary(false, "", new{@class = "text-danger noList"})
+                                </div>
+                                <div class="mb-3">
+                                    <input asp-for="UserName" class="form-control" />
+                                </div>
+                                <div class="mb-3">
+                                    <textarea hidden asp-for="UserId" class="form-control"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <input hidden asp-for="FriendId" class="form-control" />
+                                </div>
+                                <input asp-for="Id" hidden />
+                                <button type="submit" class="w-100 btn btn-primary">Agregar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (ViewBag.FriendsPosts.Count == 0)
             {
                 <div class="d-flex justify-content-center">
                     <h4 class="text-info">No has posteado nada aun :D</h4>
@@ -37,7 +67,7 @@
             }
             else
             {
-                @foreach (PostViewModel post in Model)
+                @foreach (PostViewModel post in ViewBag.FriendsPosts)
                 {
                     <div class="postContainerBorders" style="">
                         <div class="postContainerHeader mb-3 borderBottom">

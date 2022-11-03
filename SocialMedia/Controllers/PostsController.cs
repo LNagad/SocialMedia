@@ -5,6 +5,7 @@ using Core.Application.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Core.Domain.Entities;
+using SocialMedia.Middlewares;
 
 namespace SocialMedia.Controllers
 {
@@ -13,22 +14,34 @@ namespace SocialMedia.Controllers
         private readonly IPostService _postService;
         private readonly IHttpContextAccessor _httpContext;
         private readonly UserViewModel _user;
-        public PostsController(IPostService postService, IHttpContextAccessor httpContext)
+        private readonly ValidateUserSession _valSession;
+        public PostsController(IPostService postService, IHttpContextAccessor httpContext, ValidateUserSession valSession)
         {
             _postService = postService;
             _httpContext = httpContext;
             _user = _httpContext.HttpContext.Session.Get<UserViewModel>("user");
+            _valSession = valSession;
         }
 
         public IActionResult Create()
         {
+            if (!_valSession.HasUser())
+            {
+                return RedirectToRoute(new { controller = "User", action = "Login" });
+            }
+
             return View("SavePost", new SavePostViewModel());
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(SavePostViewModel vm)
         {
-            if(!ModelState.IsValid)
+            if (!_valSession.HasUser())
+            {
+                return RedirectToRoute(new { controller = "User", action = "Login" });
+            }
+
+            if (!ModelState.IsValid)
             {
                 return View("SavePost", vm);
             }
@@ -38,11 +51,16 @@ namespace SocialMedia.Controllers
 
             if(postVM != null && postVM.Id != 0)
             {
-                string basePath = $"/Images/Posts/{postVM.Id}";
+                if(vm.File != null)
+                {
+                    string basePath = $"/Images/Posts/{postVM.Id}";
 
-                postVM.ImagePost = UploadFileX.UploadFileTask(vm.File, postVM.Id, basePath);
+                    postVM.ImagePost = UploadFileX.UploadFileTask(vm.File, postVM.Id, basePath);
 
-                await _postService.UpdateAsync(postVM, postVM.Id);
+
+                    await _postService.UpdateAsync(postVM, postVM.Id);
+                }
+
             }
 
             return RedirectToRoute(new { controller = "Home", action = "Index" });
@@ -50,7 +68,17 @@ namespace SocialMedia.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
+            if (!_valSession.HasUser())
+            {
+                return RedirectToRoute(new { controller = "User", action = "Login" });
+            }
+
             SavePostViewModel vm =  await _postService.GetViewModelById(id);
+
+            if (_user.Id != vm.UserId)
+            {
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
 
             return View("SavePost", vm);
         }
@@ -58,6 +86,11 @@ namespace SocialMedia.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(SavePostViewModel vm)
         {
+            if (!_valSession.HasUser())
+            {
+                return RedirectToRoute(new { controller = "User", action = "Login" });
+            }
+
             if (!ModelState.IsValid)
             {
                 return View("SavePost", vm);
@@ -91,7 +124,17 @@ namespace SocialMedia.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+            if (!_valSession.HasUser())
+            {
+                return RedirectToRoute(new { controller = "User", action = "Login" });
+            }
+
             SavePostViewModel vm = await _postService.GetViewModelById(id);
+
+            if (_user.Id != vm.UserId)
+            {
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
 
             return View(vm);
         }
@@ -99,6 +142,11 @@ namespace SocialMedia.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(SavePostViewModel vm)
         {
+            if (!_valSession.HasUser())
+            {
+                return RedirectToRoute(new { controller = "User", action = "Login" });
+            }
+
             await _postService.DeleteAsync(vm.Id);
 
             //--------------------Delete Image

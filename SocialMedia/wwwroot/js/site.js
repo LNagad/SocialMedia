@@ -6,7 +6,7 @@
 })
 
 const input = document.querySelector('#postOpen');
-const modal = document.querySelector('#exampleModal');
+const modal = document.querySelector('#myModal');
 
 input.addEventListener('click', updateValue);
 
@@ -16,5 +16,5 @@ function updateValue(e) {
 
     console.log("hola")
     
-    $("#exampleModal").modal('show');
+    $("#myModal").modal('show');
 }
