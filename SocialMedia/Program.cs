@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+builder.Services.AddSharedInfrastructure(builder.Configuration);
 builder.Services.AddApplicationLayer();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<ValidateUserSession, ValidateUserSession>();

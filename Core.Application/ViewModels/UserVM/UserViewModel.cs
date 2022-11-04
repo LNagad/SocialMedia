@@ -18,7 +18,7 @@ namespace Core.Application.ViewModels.UserVM
         public string Email { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public Boolean Enabled { get; set; }
+        public int Enabled { get; set; }
 
         public ICollection<Post>? Posts { get; set; }
         public ICollection<Friends>? Friends { get; set; }

@@ -40,13 +40,13 @@ namespace SocialMedia.Controllers
 
             if (userVM != null)
             {
-                //if (!userVM.Enabled)
-                //{
-                //    ModelState.AddModelError("userValidationEnabled", "Debe activar su usuario para poder iniciar sesion");
+                if (userVM.Enabled == 0)
+                {
+                    ModelState.AddModelError("userValidationEnabled", "Debe activar su usuario para poder iniciar sesion");
 
-                //    return View(vm);
-                //}
-                    
+                    return View(vm);
+                }
+
                 HttpContext.Session.Set<UserViewModel>("user", userVM);
 
                 return RedirectToRoute(new { controller = "Home", action = "Index" });
@@ -79,6 +79,12 @@ namespace SocialMedia.Controllers
 
             if (!ModelState.IsValid)
             {
+                return View(vm);
+            }
+
+            if(await _userService.ExistUserValidation(vm) != null)
+            {
+                ModelState.AddModelError("userValidation", "Ese usuario ya existe en el sistema!");
                 return View(vm);
             }
 

@@ -11,5 +11,6 @@ namespace Core.Application.Interfaces.Services
     public interface IUserService : IGenericService<User, UserViewModel, SaveUserViewModel>
     {
         Task<UserViewModel> Login(LoginViewModel loginVm);
+        Task<User> ExistUserValidation(SaveUserViewModel userVM);
     }
 }

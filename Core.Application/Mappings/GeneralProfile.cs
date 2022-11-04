@@ -34,6 +34,14 @@ namespace Core.Application.Mappings
               .ForMember(dest => dest.LastModifiedBy, opt => opt.Ignore())
               .ForMember(dest => dest.Friends, opt => opt.Ignore())
               .ForMember(dest => dest.Posts, opt => opt.Ignore());
+
+
+            CreateMap<UserViewModel, SaveUserViewModel>()
+              .ForMember(dest => dest.ConfirmPassword, opt => opt.Ignore())
+              .ForMember(dest => dest.File1, opt => opt.Ignore())
+              .ReverseMap()
+              .ForMember(dest => dest.Friends, opt => opt.Ignore())
+              .ForMember(dest => dest.Posts, opt => opt.Ignore());
             #endregion
 
             #region posts
