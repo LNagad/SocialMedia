@@ -12,5 +12,6 @@ namespace Core.Application.Interfaces.Repositories
     {
         Task<User> Login(LoginViewModel userVM);
         Task<User> ExistUserValidation(UserViewModel userVM);
+        Task<User> ExistUserByActivationKey(string key);
     }
 }

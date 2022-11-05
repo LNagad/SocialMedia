@@ -12,5 +12,8 @@ namespace Core.Application.Interfaces.Services
     {
         Task<UserViewModel> Login(LoginViewModel loginVm);
         Task<User> ExistUserValidation(SaveUserViewModel userVM);
+
+        Task<bool> ActivateUser(SaveUserViewModel userVM);
+        Task<SaveUserViewModel> ExistUserByActivationKey(string key);
     }
 }

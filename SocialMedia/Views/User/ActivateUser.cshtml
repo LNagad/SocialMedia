@@ -1,0 +1,13 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@Html.ValidationSummary(false, "", new{@class = "text-danger"})
+
+<div class="d-flex flex-column">
+    <h1 class="mb-5 mt-5">@(ViewBag.X != null || ViewBag.X != "" ? ViewBag.X : "")</h1>
+
+    <a asp-action="Login" asp-controller="User" class="btn btn-secondary mt-5">Iniciar sesion</a>
+</div>

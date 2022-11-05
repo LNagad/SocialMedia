@@ -25,6 +25,7 @@ namespace Infrastructure.Persistence.Repositories
         {
             user.Password = PasswordEncryption.ComputeSha256Hash(user.Password);
             user.Enabled = 0;
+            user.ActivationKey = Guid.NewGuid().ToString();
             return await base.AddAsync(user);
         }
 
@@ -32,6 +33,14 @@ namespace Infrastructure.Persistence.Repositories
         {
             User user = await _dbContext.Set<User>().
                 FirstOrDefaultAsync(user => user.UserName == userVM.UserName);
+
+            return user;
+        }
+
+        public async Task<User> ExistUserByActivationKey(string key)
+        {
+            User user = await _dbContext.Set<User>().
+                FirstOrDefaultAsync(user => user.ActivationKey == key);
 
             return user;
         }

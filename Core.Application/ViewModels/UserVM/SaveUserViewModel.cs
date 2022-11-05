@@ -37,14 +37,19 @@ namespace Core.Application.ViewModels.UserVM
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+
         [Required(ErrorMessage = "Debe colocar una password")]
         [DataType(DataType.Password)]
         [StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
         [Compare(nameof(Password), ErrorMessage = "Las password no coinciden")]
         public string ConfirmPassword { get; set; }
 
+        public string? ActivationKey { get; set; }
+
         [Required(ErrorMessage = "Debe colocar su foto de perfil")]
         [DataType(DataType.Upload)]
         public IFormFile File1 { get; set; }
+
+
     }
 }

@@ -17,6 +17,7 @@ namespace Core.Domain.Entities
         public string UserName { get; set; }
         public string Password { get; set; }
         public int Enabled { get; set; }
+        public string? ActivationKey { get; set; }
 
         public ICollection<Post>? Posts { get; set; }
         public ICollection<Friends>? Friends { get; set; }

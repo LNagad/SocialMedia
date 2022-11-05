@@ -42,7 +42,7 @@ namespace SocialMedia.Controllers
             {
                 if (userVM.Enabled == 0)
                 {
-                    ModelState.AddModelError("userValidationEnabled", "Debe activar su usuario para poder iniciar sesion");
+                    ModelState.AddModelError("userValidationEnabled", "Debe activar su usuario para poder iniciar sesion, revise su correo para encontrar el link de activacion");
 
                     return View(vm);
                 }
@@ -106,6 +106,31 @@ namespace SocialMedia.Controllers
             HttpContext.Session.Remove("user");
 
             return RedirectToRoute(new { controller = "User", action = "Login" });
+        }
+
+        
+        public async Task<IActionResult> ActivateUser(string key)
+        {
+            if(key == null)
+            {
+                return RedirectToRoute(new { controller = "User", action = "Login" });
+            }
+
+            SaveUserViewModel userFounded = await _userService.ExistUserByActivationKey(key);
+
+            if (userFounded.UserName == null)
+            {
+
+                ViewBag.X = "Ese usuario no existe o ya se encuentra activado!";
+
+                return View();
+            }
+
+            await _userService.ActivateUser(userFounded);
+
+            ViewBag.X = "Activacion completada!";
+
+            return View();
         }
     }
 }

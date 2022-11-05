@@ -38,7 +38,10 @@ namespace Core.Application.Services
             {
                 To = entityVM.Email,
                 Subject = "Welcome!",
-                Body = $"welcome to my app {entityVM.UserName}"
+                Body = $"<h1 style="+"color: blue;"+">Welcome to Maycol Social Media App</h1>" +
+                   $"<p>Your username is {entityVM.UserName}</p> \n" +
+                   $"Link de activacion: " +
+                   $"https://localhost:9999/User/ActivateUser?key={entityVM.ActivationKey}"
             });
 
             return entityVM;
@@ -79,5 +82,38 @@ namespace Core.Application.Services
 
             return await _userRepository.ExistUserValidation(userMap);
         }
+
+        public async Task<SaveUserViewModel> ExistUserByActivationKey(string key)
+        {
+            SaveUserViewModel userMap = new();
+
+            User founded = await _userRepository.ExistUserByActivationKey(key);
+
+            if (founded != null)
+            {
+                 userMap = _mapper.Map<SaveUserViewModel>(founded);
+
+            } else
+            {
+                userMap.UserName = null;
+            }
+
+            return userMap;
+
+        }
+
+
+        public async Task<bool> ActivateUser(SaveUserViewModel userVM)
+        {
+            var user =  await _userRepository.GetByIdAsync(userVM.Id);
+            user.ActivationKey = null;
+            user.Enabled = 1;
+
+            await _userRepository.UpdateAsync(user, user.Id);
+
+            return true;
+        }
+
+
     }
 }
